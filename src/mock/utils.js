@@ -7,7 +7,9 @@ const getRandomInteger = (a, b) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-const humanizeTaskDueDate = (dueDate) => dayjs(dueDate).format('D MMMM');
+const humanizeTaskDueDateTo = (date_to) => dayjs(date_to).format('D MMMM');
+const detalizedTaskDueDateFrom = (date_from) => dayjs(date_from).format('D/MM/YY HH:mm');
+const detalizedTaskDueDateTo = (date_to) => dayjs(date_to).format('D/MM/YY HH:mm');
 
 const generateDate = () => {
   const maxDaysGap = 7;
@@ -17,4 +19,4 @@ const generateDate = () => {
 
 //console.log(generateDate());
 
-export { getRandomInteger, humanizeTaskDueDate, generateDate };
+export { getRandomInteger, humanizeTaskDueDateTo, generateDate, detalizedTaskDueDateTo, detalizedTaskDueDateFrom };

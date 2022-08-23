@@ -1,13 +1,14 @@
 import { createElement } from '../render.js';
-import { generateDate } from '../mock/utils.js';
+import { humanizeTaskDueDate, humanizeTaskDueDateTo } from '../mock/utils.js';
 
-const createTripPointTemplate = (destination, offerType, dueDate) => {
+const createTripPointTemplate = (destination, offerType, point) => {
   const { name } = destination;
   const { type, offers } = offerType;
+  const {base_price, date_to} = point;
   for (let i = 0; i < offers.length; i++) {
     const offer = offers[i];
     const {title , price} = offer;
-    const date = generateDate(dueDate);
+    const date = humanizeTaskDueDateTo(date_to);
     return (`<li class="trip-events__item">
   <div class="event">
     <time class="event__date" datetime="2019-03-18">${date}</time>
@@ -23,7 +24,7 @@ const createTripPointTemplate = (destination, offerType, dueDate) => {
       </p>
     </div>
     <p class="event__price">
-      €&nbsp;<span class="event__price-value">20</span>
+      €&nbsp;<span class="event__price-value">${base_price}</span>
     </p>
     <h4 class="visually-hidden">Offers:</h4>
     <ul class="event__selected-offers">
@@ -45,13 +46,14 @@ const createTripPointTemplate = (destination, offerType, dueDate) => {
 
 export default class TripPoint {
 
-  constructor(destination, offerType) {
+  constructor(destination, offerType, point) {
     this.destination = destination;
     this.offerType = offerType;
+    this.point = point;
   }
 
   getTemplate() {
-    return createTripPointTemplate(this.destination, this.offerType);
+    return createTripPointTemplate(this.destination, this.offerType, this.point);
   }
 
   getElement() {

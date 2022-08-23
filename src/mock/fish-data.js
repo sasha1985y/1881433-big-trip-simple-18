@@ -48,7 +48,7 @@ const createDestination = () => ({
 const createOffer = () => ({
   id: 1,
   title: 'offer title',
-  price: getRandomInteger(1000, 5000)
+  price: getRandomInteger(100, 250)
 });
 
 const chooseOffer = () => {
@@ -72,4 +72,14 @@ const createOffersByType = () => ({
   offers: chooseOffer()
 });
 
-export { createDestination, createOffersByType };
+const createPoint = () => ({
+  base_price: getRandomInteger(100, 500),
+  date_from: '2019-07-10T22:55:56.845Z',
+  date_to: '2019-07-11T11:22:13.375Z',
+  destination: '$Destination.id$',
+  id: '0',
+  offers: '$Array < Offer.id > $',
+  type: 'bus'
+});
+
+export { createDestination, createOffersByType, createPoint };

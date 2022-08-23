@@ -1,11 +1,15 @@
 import { createElement } from '../render.js';
+import {  detalizedTaskDueDateTo, detalizedTaskDueDateFrom } from '../mock/utils.js';
 
-const createFormEditTemplate = (destination, offerType) => {
+const createFormEditTemplate = (destination, offerType, point) => {
   const { name, description} = destination;
   const { type, offers } = offerType;
+  const {base_price, date_from, date_to} = point;
   for (let i = 0; i < offers.length; i++) {
     const offer = offers[i];
     const {title , price} = offer;
+    const dateTo = detalizedTaskDueDateTo(date_to);
+    const dateFrom = detalizedTaskDueDateTo(date_from);
     return (`<li class="trip-events__item">
       <form class="event event--edit" action="#" method="post">
         <header class="event__header">
@@ -82,10 +86,10 @@ const createFormEditTemplate = (destination, offerType) => {
 
           <div class="event__field-group  event__field-group--time">
             <label class="visually-hidden" for="event-start-time-1">From</label>
-            <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="18/03/19 12:25">
+            <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${dateFrom}">
               —
               <label class="visually-hidden" for="event-end-time-1">To</label>
-              <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="18/03/19 13:35">
+              <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${dateTo}">
               </div>
 
               <div class="event__field-group  event__field-group--price">
@@ -93,7 +97,7 @@ const createFormEditTemplate = (destination, offerType) => {
                   <span class="visually-hidden">Price</span>
                   €
                 </label>
-                <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="160">
+                <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${base_price}">
               </div>
 
               <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
@@ -167,13 +171,14 @@ const createFormEditTemplate = (destination, offerType) => {
 
 export default class FormEdit {
 
-  constructor(destination, offerType) {
+  constructor(destination, offerType, point) {
     this.destination = destination;
     this.offerType = offerType;
+    this.point = point;
   }
 
   getTemplate() {
-    return createFormEditTemplate(this.destination, this.offerType);
+    return createFormEditTemplate(this.destination, this.offerType, this.point);
   }
 
   getElement() {

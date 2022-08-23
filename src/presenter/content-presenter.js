@@ -2,8 +2,8 @@ import HeaderFilterButtons from '../view/filters.js';
 import MainTripSortItems from '../view/sorting.js';
 import UserViewContainer from '../view/user-view-container.js';
 import AddForm from '../view/add-form.js';
-import FormEdit from '../view/form-edit.js';
 import TripPoint from '../view/trip-point.js';
+import FormEdit from '../view/form-edit.js';
 import {render} from '../render.js';
 
 export default class ContentPresenter {
@@ -14,7 +14,7 @@ export default class ContentPresenter {
 
   userViewContainer = new UserViewContainer();
 
-  init = (appContainer, destinationsModel, offersTypeModel) => {
+  init = (appContainer, destinationsModel, offersTypeModel, pointModel) => {
     this.appContainer = appContainer;
     this.appContainer.headerFilterButtons = document.querySelector('.trip-controls__filters');
     this.appContainer.mainTripSortItems = document.querySelector('.trip-events');
@@ -25,6 +25,9 @@ export default class ContentPresenter {
     this.offersTypeModel = offersTypeModel;
     this.offersType = [...this.offersTypeModel.getOffersType()];
 
+    this.pointModel = pointModel;
+    this.points = [...this.pointModel.getPoints()];
+
 
     render(this.headerFilterButtons, this.appContainer.headerFilterButtons);
     render(this.mainTripSortItems, this.appContainer.mainTripSortItems);
@@ -34,12 +37,12 @@ export default class ContentPresenter {
 
 
     for (let j = 0; j < 1; j++) {
-      render(new FormEdit(this.destinations[j], this.offersType[j]), this.appContainer.userViewContainer);
+      render(new FormEdit(this.destinations[j], this.offersType[j], this.points[j]), this.appContainer.userViewContainer);
     }
 
 
     for (let i = 0; i < this.destinations.length; i++) {
-      render(new TripPoint(this.destinations[i], this.offersType[i]), this.appContainer.userViewContainer);
+      render(new TripPoint(this.destinations[i], this.offersType[i], this.points[i]), this.appContainer.userViewContainer);
     }
 
   };
