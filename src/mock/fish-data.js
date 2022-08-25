@@ -1,5 +1,7 @@
 import { getRandomInteger } from './utils.js';
 
+const GLOBAL_INTEGER = 3;
+
 const DESCRIPTIONS = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   'Cras aliquet varius magna, non porta ligula feugiat eget.',
   'Fusce tristique felis at fermentum pharetra.', 'Aliquam id orci ut lectus varius viverra.',
@@ -34,7 +36,7 @@ const VEHICLE_TYPE = [
 ];
 
 const createDestination = () => ({
-  id: getRandomInteger(1, 25),
+  id: 1,
   description: DESCRIPTIONS[getRandomInteger(0, DESCRIPTIONS.length - 1)],
   name: PLACES[getRandomInteger(0, PLACES.length - 1)],
   pictures: [
@@ -45,6 +47,17 @@ const createDestination = () => ({
   ]
 });
 
+const createDestinationIdPlus = () => {
+  const setDestinations = [];
+  for (let i = 0; i < GLOBAL_INTEGER; i++) {
+    const nextDestination = createDestination();
+    setDestinations.push(nextDestination);
+    nextDestination.id += i;
+  }
+  return setDestinations;
+};
+
+
 const createOffer = () => ({
   id: 1,
   title: 'offer title',
@@ -54,9 +67,9 @@ const createOffer = () => ({
 const chooseOffer = () => {
 
   const setOffers = [];
-  const randomOffersInt = getRandomInteger(0, 5);
+  const randomOffersInt = getRandomInteger(0, GLOBAL_INTEGER);
 
-  for (let i = 0; i < 5 - randomOffersInt; i++) {
+  for (let i = 0; i < GLOBAL_INTEGER - randomOffersInt; i++) {
     const nextOffer = createOffer();
     setOffers.push(nextOffer);
     nextOffer.id += i;
@@ -77,9 +90,19 @@ const createPoint = () => ({
   date_from: '2019-07-10T22:55:56.845Z',
   date_to: '2019-07-11T11:22:13.375Z',
   destination: '$Destination.id$',
-  id: '0',
+  id: 1,
   offers: '$Array < Offer.id > $',
   type: 'bus'
 });
 
-export { createDestination, createOffersByType, createPoint };
+const createPointIdPlus = () => {
+  const setPoints = [];
+  for (let i = 0; i < GLOBAL_INTEGER; i++) {
+    const nextPoint = createPoint();
+    setPoints.push(nextPoint);
+    nextPoint.id += i;
+  }
+  return setPoints;
+};
+
+export { createDestinationIdPlus, createOffersByType, createPointIdPlus, GLOBAL_INTEGER };

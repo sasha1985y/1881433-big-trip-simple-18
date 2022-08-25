@@ -1,7 +1,7 @@
-import { createDestination } from '../mock/fish-data';
+import { createDestinationIdPlus } from '../mock/fish-data';
 
 export default class DestinationsModel {
-  destinationsArray = Array.from({length: 3}, createDestination);
+  destinationsArray = Array.from(createDestinationIdPlus());
 
   getDestinations = () => this.destinationsArray;
 }

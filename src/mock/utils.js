@@ -17,6 +17,4 @@ const generateDate = () => {
   return dayjs().add(daysGap, 'day').toDate();
 };
 
-//console.log(generateDate());
-
 export { getRandomInteger, humanizeTaskDueDateTo, generateDate, detalizedTaskDueDateTo, detalizedTaskDueDateFrom };

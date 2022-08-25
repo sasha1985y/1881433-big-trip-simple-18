@@ -5,6 +5,7 @@ import AddForm from '../view/add-form.js';
 import TripPoint from '../view/trip-point.js';
 import FormEdit from '../view/form-edit.js';
 import {render} from '../render.js';
+import { GLOBAL_INTEGER } from '../mock/fish-data.js';
 
 export default class ContentPresenter {
 
@@ -36,12 +37,16 @@ export default class ContentPresenter {
     this.appContainer.userViewContainer = document.querySelector('.trip-events__list');
 
 
-    for (let j = 0; j < 1; j++) {
-      render(new FormEdit(this.destinations[j], this.offersType[j], this.points[j]), this.appContainer.userViewContainer);
-    }
+    console.log(
+      this.offersType,
+      this.destinations,
+      this.points
+    );
+
+    render(new FormEdit(this.destinations, this.offersType, this.points), this.appContainer.userViewContainer);
 
 
-    for (let i = 0; i < this.destinations.length; i++) {
+    for (let i = 0; i < GLOBAL_INTEGER; i++) {
       render(new TripPoint(this.destinations[i], this.offersType[i], this.points[i]), this.appContainer.userViewContainer);
     }
 
