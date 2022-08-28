@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { getRandomInteger } from './utils.js';
 
 const GLOBAL_INTEGER = 3;
@@ -35,6 +36,9 @@ const VEHICLE_TYPE = [
   'restaurant'
 ];
 
+
+/* destinations */
+
 const createDestination = () => ({
   id: 1,
   description: DESCRIPTIONS[getRandomInteger(0, DESCRIPTIONS.length - 1)],
@@ -57,6 +61,9 @@ const createDestinationIdPlus = () => {
   return setDestinations;
 };
 
+const destinationsArr = createDestinationIdPlus();
+
+/* offers */
 
 const createOffer = () => ({
   id: 1,
@@ -77,7 +84,8 @@ const chooseOffer = () => {
 
   if(setOffers.length > 0) {
     return setOffers;
-  } return ['No additional offers'];
+  }
+
 };
 
 const createOffersByType = () => ({
@@ -85,24 +93,119 @@ const createOffersByType = () => ({
   offers: chooseOffer()
 });
 
+
+const createOffersByTypeArr = () => {
+  const localOffersByTypeArr = [];
+  for (let i = 0; i < GLOBAL_INTEGER; i++) {
+    const oneArr = createOffersByType();
+    localOffersByTypeArr.push(oneArr);
+  }
+  return localOffersByTypeArr;
+};
+const offersByTypeArr = createOffersByTypeArr();
+
+const getOffersArr = () => {
+  const offersArr = [];
+
+  offersByTypeArr.forEach((element) => {
+    if(element.offers === undefined) {
+      offersArr.push(undefined);
+    } else {
+      const elementId = element.offers.map((item) => item.id);
+      offersArr.push(elementId);
+    }
+  });
+
+  return offersArr;
+};
+
+const idOffersArray = getOffersArr();
+
+/* points */
+
+const generateTodayDate = () => {
+  const localContainer = {};
+
+  const days = dayjs().format('D');
+  const months = dayjs().format('MM');
+  const years = dayjs().format('YYYY');
+  const hours = dayjs().format('HH');
+  const minutes = dayjs().format('mm');
+  const seconds = dayjs().format('ss');
+  const milliseconds = getRandomInteger(0, 999);
+
+  localContainer.today = `${years}-${months}-${days}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+
+  /*let monthsFromBeginning = +months - getRandomInteger(0, 1);
+  String(monthsFromBeginning).length === 1 ? monthsFromBeginning = 0 + String(monthsFromBeginning) : monthsFromBeginning;
+  let monthsToEnd = +months + getRandomInteger(0, 1);
+  String(monthsToEnd).length === 1 ? monthsToEnd = 0 + String(monthsToEnd) : monthsToEnd;
+
+  let daysFromBeginning = +days - getRandomInteger(0, days - 1);
+  String(daysFromBeginning).length === 1 ? daysFromBeginning = 0 + String(daysFromBeginning) : daysFromBeginning;
+  let daysToEnd = +days + getRandomInteger(0, days - (days - 1));
+  String(daysToEnd).length === 1 ? daysToEnd = 0 + String(daysToEnd) : daysToEnd;
+
+  let hoursFromBeginning = +hours - getRandomInteger(0, hours - 1);
+  String(hoursFromBeginning).length === 1 ? hoursFromBeginning = 0 + String(hoursFromBeginning) : hoursFromBeginning;
+  let hoursToEnd = +hours + getRandomInteger(0, hours - (hours - 1));
+  String(hoursToEnd).length === 1 ? hoursToEnd = 0 + String(hoursToEnd) : hoursToEnd;
+
+  let minutesFromBeginning = +minutes - getRandomInteger(0, minutes - 1);
+  String(minutesFromBeginning).length === 1 ? minutesFromBeginning = 0 + String(minutesFromBeginning) : minutesFromBeginning;
+  let minutesToEnd = +minutes + getRandomInteger(0, minutes - (minutes - 1));
+  String(minutesToEnd).length === 1 ? minutesToEnd = 0 + String(minutesToEnd) : minutesToEnd;
+
+  const timefromBeginning = `${years}-${monthsFromBeginning}-${daysFromBeginning}T${hoursFromBeginning}:${minutesFromBeginning}:${seconds}.${milliseconds}Z`;
+  const timeToEnd = `${years}-${monthsToEnd}-${daysToEnd}T${hoursToEnd}:${minutesToEnd}:${seconds}.${milliseconds}Z`;*/
+
+  const timefromBeginning = `${years}-${months}-${days}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+  const timeToEnd = `${years}-${months}-${days}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+
+  localContainer.beginning = timefromBeginning;
+  localContainer.end = timeToEnd;
+
+  return localContainer;
+};
+
+const createTimesArr = () => {
+  const timesArr = [];
+  for (let i = 0; i < GLOBAL_INTEGER; i++) {
+    timesArr.push(generateTodayDate());
+  }
+  return timesArr;
+};
+
+const times = createTimesArr();
+
 const createPoint = () => ({
-  base_price: getRandomInteger(100, 500),
-  date_from: '2019-07-10T22:55:56.845Z',
-  date_to: '2019-07-11T11:22:13.375Z',
+  basePrice: getRandomInteger(100, 500),
+  dateFrom: '2019-07-11T11:22:13.375Z',
+  dateTo: '2019-07-23T11:15:13.375Z',
   destination: '$Destination.id$',
   id: 1,
-  offers: '$Array < Offer.id > $',
-  type: 'bus'
+  offers: 'offers',
+  type: 'type'
 });
 
 const createPointIdPlus = () => {
   const setPoints = [];
+
   for (let i = 0; i < GLOBAL_INTEGER; i++) {
+    const offerObject = offersByTypeArr[i];
+    const idOfferArray = idOffersArray[i];
+    const time = times[i];
     const nextPoint = createPoint();
     setPoints.push(nextPoint);
+    nextPoint.dateFrom = time.beginning;
+    nextPoint.dateTo = time.end;
     nextPoint.id += i;
+    nextPoint.offers = idOfferArray;
+    nextPoint.type = offerObject.type;
   }
   return setPoints;
 };
 
-export { createDestinationIdPlus, createOffersByType, createPointIdPlus, GLOBAL_INTEGER };
+const setPointsArr = createPointIdPlus();
+
+export { destinationsArr, offersByTypeArr, setPointsArr, GLOBAL_INTEGER };

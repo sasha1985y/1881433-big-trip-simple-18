@@ -37,12 +37,6 @@ export default class ContentPresenter {
     this.appContainer.userViewContainer = document.querySelector('.trip-events__list');
 
 
-    console.log(
-      this.offersType,
-      this.destinations,
-      this.points
-    );
-
     render(new FormEdit(this.destinations, this.offersType, this.points), this.appContainer.userViewContainer);
 
 

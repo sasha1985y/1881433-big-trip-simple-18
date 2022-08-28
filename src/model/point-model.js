@@ -1,7 +1,7 @@
-import { createPointIdPlus } from '../mock/fish-data';
+import { setPointsArr } from '../mock/fish-data';
 
 export default class PointModel {
-  pointsArray = Array.from(createPointIdPlus());
+  pointsArray = setPointsArr;
 
   getPoints = () => this.pointsArray;
 }

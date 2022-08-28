@@ -7,14 +7,13 @@ const getRandomInteger = (a, b) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-const humanizeTaskDueDateTo = (date_to) => dayjs(date_to).format('D MMMM');
-const detalizedTaskDueDateFrom = (date_from) => dayjs(date_from).format('D/MM/YY HH:mm');
-const detalizedTaskDueDateTo = (date_to) => dayjs(date_to).format('D/MM/YY HH:mm');
+const humanizedDateTo = (dateTo) => dayjs(dateTo).format('D MMMM');
 
-const generateDate = () => {
-  const maxDaysGap = 7;
-  const daysGap = getRandomInteger(-maxDaysGap, maxDaysGap);
-  return dayjs().add(daysGap, 'day').toDate();
-};
+const detalizedDateFrom = (dateFrom) => dayjs(dateFrom).format('D/MM/YY HH:mm');
+const detalizedDateTo = (dateTo) => dayjs(dateTo).format('D/MM/YY HH:mm');
 
-export { getRandomInteger, humanizeTaskDueDateTo, generateDate, detalizedTaskDueDateTo, detalizedTaskDueDateFrom };
+const detalizedHoursMinutesTo = (dateTo) => dayjs(dateTo).format('HH:mm');
+const detalizedHoursMinutesFrom = (dateFrom) => dayjs(dateFrom).format('HH:mm');
+
+
+export { getRandomInteger, humanizedDateTo, detalizedDateTo, detalizedDateFrom, detalizedHoursMinutesTo, detalizedHoursMinutesFrom };

@@ -1,14 +1,77 @@
 import { createElement } from '../render.js';
-import { detalizedTaskDueDateTo, detalizedTaskDueDateFrom } from '../mock/utils.js';
+import { detalizedDateTo, detalizedDateFrom } from '../mock/utils.js';
 
-const createFormEditTemplate = (destination, offerType, point) => {
-  const {id, name, description} = destination;
+const getOptimizedPoints = (points) => {
+  for (let i = 0; i < points.length; i++) {
+    const element = points[i];
+    return element;
+  }
+};
+
+const getOptimizedDestinations = (destinations) => {
+  for (let i = 0; i < destinations.length; i++) {
+    const element = destinations[i];
+    return element;
+  }
+};
+
+const getOptimizedOffersType = (offersType) => {
+  for (let i = 0; i < offersType.length; i++) {
+    const element = offersType[i];
+    return element;
+  }
+};
+
+const getOptimizedOffers = (offers) => {
+
+  let listOffers = '';
+  let index = 0;
+  if (offers && offers.length > 0) {
+    offers.forEach((offer) => {
+
+      listOffers += `<div class="event__offer-selector">
+      <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-${index}" type="checkbox" name="event-offer-luggage" checked="">
+        <label class="event__offer-label" for="event-offer-luggage-${index}">
+          <span class="event__offer-title">${offer.title}</span>
+          +€&nbsp;
+          <span class="event__offer-price">${offer.price}</span>
+        </label>
+    </div>`;
+      index++;
+    });
+  } else {
+    listOffers = '';
+  }
+  return listOffers;
+};
+
+const getOptimizedPlaces = (destinations) => {
+
+  let listNames = '';
+
+  destinations.forEach((destination) => {
+    listNames += `<option value="${destination.name}"></option>`;
+  });
+  return listNames;
+};
+
+const createFormEditTemplate = (destinations, offersType, points) => {
+
+  const destination = getOptimizedDestinations(destinations);
+  const { name, description } = destination;
+  const destinationNames = getOptimizedPlaces(destinations);
+
+  const offerType = getOptimizedOffersType(offersType);
   const { type, offers } = offerType;
-  const {base_price, date_from, date_to} = point;
-  const dateTo = detalizedTaskDueDateTo(date_to);
-  const dateFrom = detalizedTaskDueDateTo(date_from);
-  const formTitle = 'FormTitle';
-  const formPrice = 'formPrice';
+
+  const offersItems = getOptimizedOffers(offers);
+
+  const point = getOptimizedPoints(points);
+  const { basePrice, dateFrom, dateTo } = point;
+
+  const dateToFuture = detalizedDateTo(dateTo);
+  const dateFromPast = detalizedDateFrom(dateFrom);
+
   return (`<li class="trip-events__item">
     <form class="event event--edit" action="#" method="post">
       <header class="event__header">
@@ -75,20 +138,18 @@ const createFormEditTemplate = (destination, offerType, point) => {
           <label class="event__label  event__type-output" for="event-destination-1">
             ${type}
           </label>
-          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="Chamonix" list="destination-list-1">
+          <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${name}" list="destination-list-1">
             <datalist id="destination-list-1">
-              <option value="${name}"></option>
-              <option value="${name}"></option>
-              <option value="${name}"></option>
+              ${destinationNames}
             </datalist>
         </div>
 
         <div class="event__field-group  event__field-group--time">
           <label class="visually-hidden" for="event-start-time-1">From</label>
-          <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${dateFrom}">
+          <input class="event__input  event__input--time" id="event-start-time-1" type="text" name="event-start-time" value="${dateFromPast}">
             —
             <label class="visually-hidden" for="event-end-time-1">To</label>
-            <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${dateTo}">
+            <input class="event__input  event__input--time" id="event-end-time-1" type="text" name="event-end-time" value="${dateToFuture}">
             </div>
 
             <div class="event__field-group  event__field-group--price">
@@ -96,7 +157,7 @@ const createFormEditTemplate = (destination, offerType, point) => {
                 <span class="visually-hidden">Price</span>
                 €
               </label>
-              <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${base_price}">
+              <input class="event__input  event__input--price" id="event-price-1" type="text" name="event-price" value="${basePrice}">
             </div>
 
             <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
@@ -110,50 +171,7 @@ const createFormEditTemplate = (destination, offerType, point) => {
               <h3 class="event__section-title  event__section-title--offers">Offers</h3>
 
               <div class="event__available-offers">
-                <div class="event__offer-selector">
-                  <input class="event__offer-checkbox  visually-hidden" id="event-offer-luggage-1" type="checkbox" name="event-offer-luggage" checked="">
-                    <label class="event__offer-label" for="event-offer-luggage-1">
-                      <span class="event__offer-title">${formTitle}</span>
-                      +€&nbsp;
-                      <span class="event__offer-price">${formPrice}</span>
-                    </label>
-                </div>
-
-                <div class="event__offer-selector">
-                  <input class="event__offer-checkbox  visually-hidden" id="event-offer-comfort-1" type="checkbox" name="event-offer-comfort" checked="">
-                    <label class="event__offer-label" for="event-offer-comfort-1">
-                      <span class="event__offer-title">${formTitle}</span>
-                      +€&nbsp;
-                      <span class="event__offer-price">${formPrice}</span>
-                    </label>
-                </div>
-
-                <div class="event__offer-selector">
-                  <input class="event__offer-checkbox  visually-hidden" id="event-offer-meal-1" type="checkbox" name="event-offer-meal">
-                    <label class="event__offer-label" for="event-offer-meal-1">
-                      <span class="event__offer-title">${formTitle}</span>
-                      +€&nbsp;
-                      <span class="event__offer-price">${formPrice}</span>
-                    </label>
-                </div>
-
-                <div class="event__offer-selector">
-                  <input class="event__offer-checkbox  visually-hidden" id="event-offer-seats-1" type="checkbox" name="event-offer-seats">
-                    <label class="event__offer-label" for="event-offer-seats-1">
-                      <span class="event__offer-title">${formTitle}</span>
-                      +€&nbsp;
-                      <span class="event__offer-price">${formPrice}</span>
-                    </label>
-                </div>
-
-                <div class="event__offer-selector">
-                  <input class="event__offer-checkbox  visually-hidden" id="event-offer-train-1" type="checkbox" name="event-offer-train">
-                    <label class="event__offer-label" for="event-offer-train-1">
-                      <span class="event__offer-title">${formTitle}</span>
-                      +€&nbsp;
-                      <span class="event__offer-price">${formPrice}</span>
-                    </label>
-                </div>
+                ${offersItems}
               </div>
             </section>
 
@@ -169,14 +187,14 @@ const createFormEditTemplate = (destination, offerType, point) => {
 
 export default class FormEdit {
 
-  constructor(destination, offerType, point) {
-    this.destination = destination;
-    this.offerType = offerType;
-    this.point = point;
+  constructor(destinations, offersType, points) {
+    this.destinations = destinations;
+    this.offersType = offersType;
+    this.points = points;
   }
 
   getTemplate() {
-    return createFormEditTemplate(this.destination, this.offerType, this.point);
+    return createFormEditTemplate(this.destinations, this.offersType, this.points);
   }
 
   getElement() {
