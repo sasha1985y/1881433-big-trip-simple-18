@@ -136,31 +136,56 @@ const generateTodayDate = () => {
 
   localContainer.today = `${years}-${months}-${days}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
 
-  /*let monthsFromBeginning = +months - getRandomInteger(0, 1);
-  String(monthsFromBeginning).length === 1 ? monthsFromBeginning = 0 + String(monthsFromBeginning) : monthsFromBeginning;
+  let monthsFromBeginning = +months - getRandomInteger(0, 1);
+
+  if(String(monthsFromBeginning).length === 1) {
+    monthsFromBeginning = 0 + String(monthsFromBeginning);
+  }
+
   let monthsToEnd = +months + getRandomInteger(0, 1);
-  String(monthsToEnd).length === 1 ? monthsToEnd = 0 + String(monthsToEnd) : monthsToEnd;
+
+  if(String(monthsToEnd).length === 1) {
+    monthsToEnd = 0 + String(monthsToEnd);
+  }
 
   let daysFromBeginning = +days - getRandomInteger(0, days - 1);
-  String(daysFromBeginning).length === 1 ? daysFromBeginning = 0 + String(daysFromBeginning) : daysFromBeginning;
+
+  if(String(daysFromBeginning).length === 1) {
+    daysFromBeginning = 0 + String(daysFromBeginning);
+  }
+
   let daysToEnd = +days + getRandomInteger(0, days - (days - 1));
-  String(daysToEnd).length === 1 ? daysToEnd = 0 + String(daysToEnd) : daysToEnd;
+
+  if(String(daysToEnd).length === 1) {
+    daysToEnd = 0 + String(daysToEnd);
+  }
 
   let hoursFromBeginning = +hours - getRandomInteger(0, hours - 1);
-  String(hoursFromBeginning).length === 1 ? hoursFromBeginning = 0 + String(hoursFromBeginning) : hoursFromBeginning;
+
+  if(String(hoursFromBeginning).length === 1) {
+    hoursFromBeginning = 0 + String(hoursFromBeginning);
+  }
+
   let hoursToEnd = +hours + getRandomInteger(0, hours - (hours - 1));
-  String(hoursToEnd).length === 1 ? hoursToEnd = 0 + String(hoursToEnd) : hoursToEnd;
+
+  if(String(hoursToEnd).length === 1) {
+    hoursToEnd = 0 + String(hoursToEnd);
+  }
 
   let minutesFromBeginning = +minutes - getRandomInteger(0, minutes - 1);
-  String(minutesFromBeginning).length === 1 ? minutesFromBeginning = 0 + String(minutesFromBeginning) : minutesFromBeginning;
+
+  if(String(minutesFromBeginning).length === 1) {
+    minutesFromBeginning = 0 + String(minutesFromBeginning);
+  }
+
   let minutesToEnd = +minutes + getRandomInteger(0, minutes - (minutes - 1));
-  String(minutesToEnd).length === 1 ? minutesToEnd = 0 + String(minutesToEnd) : minutesToEnd;
+
+  if(String(minutesToEnd).length === 1) {
+    minutesToEnd = 0 + String(minutesToEnd);
+  }
 
   const timefromBeginning = `${years}-${monthsFromBeginning}-${daysFromBeginning}T${hoursFromBeginning}:${minutesFromBeginning}:${seconds}.${milliseconds}Z`;
-  const timeToEnd = `${years}-${monthsToEnd}-${daysToEnd}T${hoursToEnd}:${minutesToEnd}:${seconds}.${milliseconds}Z`;*/
-
-  const timefromBeginning = `${years}-${months}-${days}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
-  const timeToEnd = `${years}-${months}-${days}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+  const timeToEnd = `${years}-${monthsToEnd}-${daysToEnd}T${hoursToEnd}:${minutesToEnd}:${seconds}.${milliseconds}Z`;
 
   localContainer.beginning = timefromBeginning;
   localContainer.end = timeToEnd;
