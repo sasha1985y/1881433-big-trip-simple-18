@@ -21,11 +21,11 @@ const destructionTitlePrice = (offers) => {
   return listOffers;
 };
 
-const createTripPointTemplate = (destination, offerType, point) => {
+const createTripPointTemplate = (destination, offerDetails, point) => {
 
   const { name } = destination;
 
-  const { type, offers } = offerType;
+  const { type, offers } = offerDetails;
 
   const {basePrice, dateTo, dateFrom} = point;
 
@@ -67,14 +67,14 @@ const createTripPointTemplate = (destination, offerType, point) => {
 
 export default class TripPoint {
 
-  constructor(destination, offerType, point) {
+  constructor(destination, offerDetails, point) {
     this.destination = destination;
-    this.offerType = offerType;
+    this.offerDetails = offerDetails;
     this.point = point;
   }
 
   getTemplate() {
-    return createTripPointTemplate(this.destination, this.offerType, this.point);
+    return createTripPointTemplate(this.destination, this.offerDetails, this.point);
   }
 
   getElement() {
