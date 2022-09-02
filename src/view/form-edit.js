@@ -4,10 +4,10 @@ import dayjs from 'dayjs';
 /* HEADER */
 
 const getCurrentId = (point, destinations) => {
-  const destinationIds = destinations.map(item => item.id);
+  const destinationIds = destinations.map((item) => item.id);
   const currentId = destinationIds.find((item) => item === point.id);
   return currentId;
-}
+};
 
 const types = ['Taxi', 'Bus', 'Train', 'Ship', 'Drive', 'Flight', 'Check-in', 'Sightseeing', 'Restaurant'];
 
@@ -33,35 +33,35 @@ const renderCurrentType = (point, offersDetails) => {
 const renderNameOptions = (destinations) => {
   let listOptions = '';
   destinations.forEach((destination) => {
-  listOptions += `<option value="${destination.name}"></option>`
+    listOptions += `<option value="${destination.name}"></option>`;
   });
   return listOptions;
-}
+};
 
 const renderDestinationName = (destinations, point) => {
-  const destinationNames = destinations.map(item => item.name);
+  const destinationNames = destinations.map((item) => item.name);
 
   for (let i = 0; i < destinationNames.length; i++) {
     const destinationName = destinationNames[i];
 
-    if (getCurrentId(point, destinations)) return destinationName;
+    if (getCurrentId(point, destinations)) {return destinationName;}
   }
-}
+};
 
 const renderDataFrom = (point, destinations) => {
   const eventStartTime = point.dateFrom;
-  if (getCurrentId(point, destinations)) return dayjs(eventStartTime).format('D/MM/YY HH:mm');
-}
+  if (getCurrentId(point, destinations)) {return dayjs(eventStartTime).format('D/MM/YY HH:mm');}
+};
 
 const renderDataTo = (point, destinations) => {
   const eventEndTime = point.dateTo;
-  if (getCurrentId(point, destinations)) return dayjs(eventEndTime).format('D/MM/YY HH:mm');
-}
+  if (getCurrentId(point, destinations)) {return dayjs(eventEndTime).format('D/MM/YY HH:mm');}
+};
 
 const renderBasePrice = (point, destinations) => {
   const formBasePrice = point.basePrice;
-  if (getCurrentId(point, destinations)) return formBasePrice;
-}
+  if (getCurrentId(point, destinations)) {return formBasePrice;}
+};
 
 
 const createFormHeader = (point, destinations, offersDetails) => `<header class="event__header">
@@ -118,7 +118,6 @@ const createFormHeader = (point, destinations, offersDetails) => `<header class=
 
 
 const renderOffersButtons = (point, offersDetails) => {
-  const offersArr = offersDetails.map(item => item.offers);
   const pointTypeOffer = offersDetails.find((detail) => detail.type === point.type);
   let listTypeOffers = '';
   let index = 0;
@@ -145,7 +144,7 @@ const renderOffersButtons = (point, offersDetails) => {
     listTypeOffers += '';
   }
   return listTypeOffers;
-}
+};
 
 
 const createSectionOffers = (point, offersDetails) => `<section class="event__section  event__section--offers">
@@ -159,23 +158,20 @@ const createSectionOffers = (point, offersDetails) => `<section class="event__se
 /* DESCRIPTIONS */
 
 const renderDestinationDescription = (point, destinations) => {
-  const destinationDescriptions = destinations.map(item => item.description);
+  const destinationDescriptions = destinations.map((item) => item.description);
   for (let i = 0; i < destinationDescriptions.length; i++) {
     const destinationDescription = destinationDescriptions[i];
 
-    if (getCurrentId(point, destinations)) return destinationDescription;
+    if (getCurrentId(point, destinations)) {return destinationDescription;}
   }
-}
+};
 
 const createSectionDescriptions = (point, destinations) => `<section class="event__section  event__section--destination">
 <h3 class="event__section-title  event__section-title--destination">Destination</h3>
 <p class="event__destination-description">${renderDestinationDescription(point, destinations)}</p>
-</section>`
+</section>`;
 
-const createFormEditTemplate = (destinations, offersDetails, point) => {
-
-
-  return (`<li class="trip-events__item">
+const createFormEditTemplate = (destinations, offersDetails, point) => (`<li class="trip-events__item">
   <form class="event event--edit" action="#" method="post">
     ${createFormHeader(point, destinations, offersDetails)}
     <section class="event__details">
@@ -183,8 +179,7 @@ const createFormEditTemplate = (destinations, offersDetails, point) => {
       ${createSectionDescriptions(point, destinations)}
     </section>
   </form>
-</li>`)
-};
+</li>`);
 
 export default class FormEdit {
 
