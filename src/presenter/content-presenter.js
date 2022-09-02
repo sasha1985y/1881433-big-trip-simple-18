@@ -27,12 +27,6 @@ export default class ContentPresenter {
     this.pointModel = pointModel;
     this.points = [...this.pointModel.getPoints()];
 
-    console.log(
-      //this.destinations,
-      this.points,
-      this.offersDetails
-    );
-
     render(this.headerFilterButtons, this.appContainer.headerFilterButtons);
     render(this.mainTripSortItems, this.appContainer.mainTripSortItems);
 
@@ -40,7 +34,7 @@ export default class ContentPresenter {
     this.appContainer.userViewContainer = document.querySelector('.trip-events__list');
 
 
-    render(new FormEdit(this.destinations, this.offersDetails, this.points), this.appContainer.userViewContainer);
+    render(new FormEdit(this.destinations, this.offersDetails, this.points[0]), this.appContainer.userViewContainer);
 
 
     for (let i = 0; i < GLOBAL_INTEGER; i++) {
