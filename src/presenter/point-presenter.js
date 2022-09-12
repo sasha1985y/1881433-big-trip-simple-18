@@ -1,7 +1,6 @@
-import { render } from "../render";
-import FormEdit from "../view/form-edit";
-import TripPoint from "../view/trip-point";
-import UserViewContainer from "../view/user-view-container";
+/*import FormEdit from '../view/form-edit';
+import TripPoint from '../view/trip-point';
+import UserViewContainer from '../view/user-view-container';
 
 
 export default class PointPresenter {
@@ -29,7 +28,7 @@ export default class PointPresenter {
     this.#points = [...this.#pointModel.points];
 
     const pointComponent = new TripPoint(destination, offerDetails, point);
-    const pointEditComponent = new FormEdit(this.#destinations, this.#offersDetails, this.#points[0]);
+   const pointEditComponent = new FormEdit(this.#destinations, this.#offersDetails, this.#points[0]);
 
 
     //this.#pointComponent = new TripPoint(destination, offerDetails, point);
@@ -70,11 +69,11 @@ export default class PointPresenter {
     //const prevEditPointComponent = this.#pointEditComponent;
 
     //if (prevPointComponent === null || prevEditPointComponent === null) {
-      //render(this.#userViewContainer, this.#pointComponent, RenderPosition.BEFOREEND)
-      //return;
+    //render(this.#userViewContainer, this.#pointComponent, RenderPosition.BEFOREEND)
+    //return;
     //}
 
     //remove(prevPointComponent);
     //remove(prevEditPointComponent);
-  }
-}
+  };
+}*/
