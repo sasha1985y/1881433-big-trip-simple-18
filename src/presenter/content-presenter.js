@@ -37,12 +37,13 @@ export default class ContentPresenter {
     render(this.#mainTripSortItems, this.#appContainer);
     render(this.#userViewContainer, this.#appContainer);
 
-    for (let i = 0; i < this.#points.length; i++) {
-      this.#renderPoint(this.#destinations[i], this.#offersDetails[i], this.#points[i]);
-    }
 
     if (this.#points.length === 0) {
       render(this.#listEmpty, this.#userViewContainer.element);
+    } else {
+      for (let i = 0; i < this.#points.length; i++) {
+        this.#renderPoint(this.#destinations[i], this.#offersDetails[i], this.#points[i]);
+      }
     }
 
   };
