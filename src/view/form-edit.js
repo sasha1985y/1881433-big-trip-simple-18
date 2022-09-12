@@ -38,13 +38,13 @@ const renderNameOptions = (destinations) => {
   return listOptions;
 };
 
-const renderDestinationName = (destinations, point) => {
+const renderDestinationName = (point, destinations) => {
   const destinationNames = destinations.map((item) => item.name);
 
   for (let i = 0; i < destinationNames.length; i++) {
     const destinationName = destinationNames[i];
 
-    if (getCurrentId(point, destinations)) {return destinationName;}
+    if (getCurrentId(point, destinations) === i + 1) {return destinationName;}
   }
 };
 
@@ -84,7 +84,7 @@ const createFormHeader = (point, destinations, offersDetails) => `<header class=
 
   <div class="event__field-group  event__field-group--destination">
     <label class="event__label  event__type-output" for="event-destination-1">${renderCurrentType(point, offersDetails)}</label>
-    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${renderDestinationName(destinations, point)}" list="destination-list-1">
+    <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${renderDestinationName(point, destinations)}" list="destination-list-1">
       <datalist id="destination-list-1">
         ${renderNameOptions(destinations)}
       </datalist>
@@ -162,7 +162,7 @@ const renderDestinationDescription = (point, destinations) => {
   for (let i = 0; i < destinationDescriptions.length; i++) {
     const destinationDescription = destinationDescriptions[i];
 
-    if (getCurrentId(point, destinations)) {return destinationDescription;}
+    if (getCurrentId(point, destinations) === i + 1) {return destinationDescription;}
   }
 };
 
@@ -183,25 +183,33 @@ const createFormEditTemplate = (destinations, offersDetails, point) => (`<li cla
 
 export default class FormEdit {
 
+  #element = null;
+  #destinations = null;
+  #offersDetails = null;
+  #point = null;
+
   constructor(destinations, offersDetails, point) {
-    this.destinations = destinations;
-    this.offersDetails = offersDetails;
-    this.point = point;
+    this.#destinations = destinations;
+    this.#offersDetails = offersDetails;
+    this.#point = point;
   }
 
-  getTemplate() {
-    return createFormEditTemplate(this.destinations, this.offersDetails, this.point);
+
+  get template() {
+    return createFormEditTemplate(this.#destinations, this.#offersDetails, this.#point);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
 
-    return this.element;
+    return this.#element;
   }
 
   removeElement() {
-    this.element = null;
+    this.#element = null;
   }
+
+
 }
