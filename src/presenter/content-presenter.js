@@ -2,6 +2,7 @@ import MainTripSortItems from '../view/sorting.js';
 import UserViewContainer from '../view/user-view-container.js';
 import TripPoint from '../view/trip-point.js';
 import FormEdit from '../view/form-edit.js';
+import ListEmpty from '../view/list-empty-view.js';
 import {render} from '../render.js';
 
 export default class ContentPresenter {
@@ -15,6 +16,7 @@ export default class ContentPresenter {
 
   #mainTripSortItems = new MainTripSortItems();
   #userViewContainer = new UserViewContainer();
+  #listEmpty = new ListEmpty();
 
   #destinations = [];
   #offersDetails = [];
@@ -35,8 +37,13 @@ export default class ContentPresenter {
     render(this.#mainTripSortItems, this.#appContainer);
     render(this.#userViewContainer, this.#appContainer);
 
-    for (let i = 0; i < this.#points.length; i++) {
-      this.#renderPoint(this.#destinations[i], this.#offersDetails[i], this.#points[i]);
+
+    if (this.#points.length === 0) {
+      render(this.#listEmpty, this.#userViewContainer.element);
+    } else {
+      for (let i = 0; i < this.#points.length; i++) {
+        this.#renderPoint(this.#destinations[i], this.#offersDetails[i], this.#points[i]);
+      }
     }
 
   };
@@ -45,16 +52,9 @@ export default class ContentPresenter {
     const pointComponent = new TripPoint(destination, offerDetails, point);
     const pointEditComponent = new FormEdit(this.#destinations, this.#offersDetails, point);
 
-    //this.#pointComponent = new TripPoint(destination, offerDetails, point);
-    //this.#pointEditComponent = new FormEdit(this.#destinations, this.#offersDetails, this.#points[0]);
-
-    const prevPointComponent = this.#pointComponent;
-    const prevEditPointComponent = this.#pointEditComponent;
-
-
     const replacePointToForm = () => {
       this.#userViewContainer.element.replaceChild(pointEditComponent.element, pointComponent.element);
-    }
+    };
 
     const replaceFormToPoint = () => {
       this.#userViewContainer.element.replaceChild(pointComponent.element, pointEditComponent.element);
@@ -83,15 +83,7 @@ export default class ContentPresenter {
       replaceFormToPoint();
     });
 
-
-
-    //if (prevPointComponent === null || prevEditPointComponent === null) {
-      //render( this.#pointComponent, this.#userViewContainer.element, RenderPosition.BEFOREEND);
-    //}
-
     render(pointComponent, this.#userViewContainer.element);
-
-    //remove(prevPointComponent);
 
   };
 
