@@ -1,9 +1,9 @@
+import { render, replace} from '../framework/render.js';
 import MainTripSortItems from '../view/sorting.js';
 import UserViewContainer from '../view/user-view-container.js';
 import TripPoint from '../view/trip-point.js';
 import FormEdit from '../view/form-edit.js';
 import ListEmpty from '../view/list-empty-view.js';
-import {render} from '../render.js';
 
 export default class ContentPresenter {
 
@@ -11,8 +11,6 @@ export default class ContentPresenter {
   #destinationsModel = null;
   #offersTypeModel = null;
   #pointModel = null;
-  #pointComponent = null;
-  #pointEditComponent = null;
 
   #mainTripSortItems = new MainTripSortItems();
   #userViewContainer = new UserViewContainer();
@@ -49,15 +47,16 @@ export default class ContentPresenter {
   };
 
   #renderPoint = (destination, offerDetails, point) => {
+
     const pointComponent = new TripPoint(destination, offerDetails, point);
     const pointEditComponent = new FormEdit(this.#destinations, this.#offersDetails, point);
 
     const replacePointToForm = () => {
-      this.#userViewContainer.element.replaceChild(pointEditComponent.element, pointComponent.element);
+      replace(pointEditComponent, pointComponent);
     };
 
     const replaceFormToPoint = () => {
-      this.#userViewContainer.element.replaceChild(pointComponent.element, pointEditComponent.element);
+      replace(pointComponent, pointEditComponent);
     };
 
     const onEscKeyDown = (evt) => {
@@ -68,19 +67,14 @@ export default class ContentPresenter {
       }
     };
 
-    pointComponent.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
+    pointComponent.setClickHandler(() => {
       replacePointToForm();
       document.addEventListener('keydown', onEscKeyDown);
     });
 
-    pointEditComponent.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
+    pointEditComponent.setEditClickHandler(() => {
       replaceFormToPoint();
       document.removeEventListener('keydown', onEscKeyDown);
-    });
-
-    pointEditComponent.element.querySelector('.event__save-btn').addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      replaceFormToPoint();
     });
 
     render(pointComponent, this.#userViewContainer.element);
@@ -88,3 +82,4 @@ export default class ContentPresenter {
   };
 
 }
+
