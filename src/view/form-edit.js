@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view';
 import dayjs from 'dayjs';
 
 /* HEADER */
@@ -181,35 +181,31 @@ const createFormEditTemplate = (destinations, offersDetails, point) => (`<li cla
   </form>
 </li>`);
 
-export default class FormEdit {
+export default class FormEdit extends AbstractView {
 
-  #element = null;
   #destinations = null;
   #offersDetails = null;
   #point = null;
 
   constructor(destinations, offersDetails, point) {
+    super();
     this.#destinations = destinations;
     this.#offersDetails = offersDetails;
     this.#point = point;
   }
 
-
   get template() {
     return createFormEditTemplate(this.#destinations, this.#offersDetails, this.#point);
   }
 
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
+  setEditClickHandler = (callback) => {
+    this._callback.editClick = callback;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#editClickHandler);
+  };
 
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
-
+  #editClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.editClick();
+  };
 
 }
