@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { humanizedDateTo, detalizedHoursMinutesTo} from '../mock/utils.js';
+import { humanizedDateFrom, detalizedHoursMinutesTo} from '../mock/utils.js';
 
 const destructionTitlePrice = (offers) => {
   let listOffers = '';
@@ -31,13 +31,13 @@ const createTripPointTemplate = (destination, offerDetails, point) => {
 
   const titlePrice = destructionTitlePrice(offers);
 
-  const toDate = humanizedDateTo(dateTo);
+  const fromDate = humanizedDateFrom(dateFrom);
   const toDateHoursMinutes = detalizedHoursMinutesTo(dateTo);
   const fromDateHoursMinutes = detalizedHoursMinutesTo(dateFrom);
 
   return (`<li class="trip-events__item">
 <div class="event">
-  <time class="event__date" datetime="2019-03-18">${toDate}</time>
+  <time class="event__date" datetime="2019-03-18">${fromDate}</time>
   <div class="event__type">
     <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
   </div>

@@ -136,13 +136,13 @@ const generateTodayDate = () => {
 
   localContainer.today = `${years}-${months}-${days}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
 
-  let monthsFromBeginning = +months - getRandomInteger(0, 1);
+  let monthsFromBeginning = +months - getRandomInteger(-1, 1);
 
   if(String(monthsFromBeginning).length === 1) {
     monthsFromBeginning = 0 + String(monthsFromBeginning);
   }
 
-  let monthsToEnd = +months + getRandomInteger(0, 1);
+  let monthsToEnd = +months + getRandomInteger(1, 2);
 
   if(String(monthsToEnd).length === 1) {
     monthsToEnd = 0 + String(monthsToEnd);

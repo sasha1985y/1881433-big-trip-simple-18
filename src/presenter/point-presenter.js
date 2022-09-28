@@ -1,6 +1,7 @@
 import {render, replace, remove} from '../framework/render.js';
 import FormEdit from '../view/form-edit';
 import TripPoint from '../view/trip-point';
+import dayjs from 'dayjs';
 
 const Mode = {
   DEFAULT: 'DEFAULT',
@@ -10,19 +11,27 @@ const Mode = {
 export default class PointPresenter {
   #mode = Mode.DEFAULT;
 
+
   #destinations = null;
+  #offersDetails = null;
+  #destination = null;
   #offerDetails = null;
   #userViewContainer = null;
+  #futureViewContainer = null;
 
   #pointComponent = null;
   #pointEditComponent = null;
   #prevPointComponent = null;
   #prevPointEditComponent = null;
 
-  constructor (destinations, offerDetails, userViewContainer) {
-    this.#destinations = destinations;
+  constructor (destination, offerDetails, destinations, offersDetails, userViewContainer, futureViewContainer) {
+    this.#destination = destination;
     this.#offerDetails = offerDetails;
+
+    this.#destinations = destinations;
+    this.#offersDetails = offersDetails;
     this.#userViewContainer = userViewContainer;
+    this.#futureViewContainer = futureViewContainer;
   }
 
   init (point) {
@@ -31,8 +40,8 @@ export default class PointPresenter {
     this.#prevPointComponent = this.#pointComponent;
     this.#prevPointEditComponent = this.#pointEditComponent;
 
-    this.#pointComponent = new TripPoint(this.#destinations, this.#offerDetails, this.point);
-    this.#pointEditComponent = new FormEdit(this.#destinations, this.#offerDetails, this.point);
+    this.#pointComponent = new TripPoint(this.#destination, this.#offerDetails, this.point);
+    this.#pointEditComponent = new FormEdit(this.#destinations, this.#offersDetails, this.point);
 
     this.#pointComponent.setClickHandler(this.#setClickHandler);
     this.#pointEditComponent.setEditClickHandler(this.#setEditClickHandler);
@@ -40,6 +49,10 @@ export default class PointPresenter {
 
     if (this.#prevPointComponent === null || this.#prevPointEditComponent === null) {
       render(this.#pointComponent, this.#userViewContainer.element);
+      if (dayjs(point.dateFrom) < dayjs()) {
+        render(this.#pointComponent, this.#futureViewContainer.element);
+        return;
+      }
       return;
     }
 

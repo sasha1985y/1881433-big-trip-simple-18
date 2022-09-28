@@ -35,6 +35,7 @@ const renderNameOptions = (destinations) => {
   destinations.forEach((destination) => {
     listOptions += `<option value="${destination.name}"></option>`;
   });
+
   return listOptions;
 };
 
@@ -44,7 +45,7 @@ const renderDestinationName = (point, destinations) => {
   for (let i = 0; i < destinationNames.length; i++) {
     const destinationName = destinationNames[i];
 
-    if (getCurrentId(point, destinations) === i + 1) {return destinationName;}
+    if (getCurrentId(point, destinations)) {return destinationName;}
   }
 };
 
@@ -162,7 +163,7 @@ const renderDestinationDescription = (point, destinations) => {
   for (let i = 0; i < destinationDescriptions.length; i++) {
     const destinationDescription = destinationDescriptions[i];
 
-    if (getCurrentId(point, destinations) === i + 1) {return destinationDescription;}
+    if (getCurrentId(point, destinations)) {return destinationDescription;}
   }
 };
 
